@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-    public static InventoryManager instance;
     public GameObject inventoryGrid;
     public bool messyInventory;
 
     private void Awake()
     {
-        instance = this;
         ConfigureInventory();
     }
 
@@ -38,7 +36,6 @@ public class InventoryManager : MonoBehaviour
         activeSlot.slotImg.gameObject.SetActive(false);
         activeSlot.itemCount.text = string.Empty;
         activeSlot.item = null;
-        //ConfigureInventory();
     }
 
     public void ConfigureInventory()

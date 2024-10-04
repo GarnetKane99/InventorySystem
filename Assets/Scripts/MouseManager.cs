@@ -20,39 +20,38 @@ public class MouseManager : MonoBehaviour
 
         if(heldItem != null && activeItem != null && heldItem.itemID == activeItem.itemID)
         {
-            InventoryManager.instance.StackInInventory(activeSlot, heldItem);
+            activeSlot.inventoryManager.StackInInventory(activeSlot, heldItem);
             heldItem = null;
             return;
         }
 
         if(activeSlot.item != null)
         {
-            InventoryManager.instance.ClearItemSlot(activeSlot);
+            activeSlot.inventoryManager.ClearItemSlot(activeSlot);
         }
         if(heldItem != null)
-            InventoryManager.instance.PlaceInInventory(activeSlot, heldItem);
+            activeSlot.inventoryManager.PlaceInInventory(activeSlot, heldItem);
 
         heldItem = activeItem;
     }
 
     public void PickupFromStack(UISlotHandler activeSlot)
     {
+        if(heldItem != null && heldItem.itemID != activeSlot.item.itemID) { return; }
+
         if(heldItem == null)
         {
             heldItem = activeSlot.item.Clone();
-            heldItem.itemAmt = 1;
+            heldItem.itemAmt = default;
         }
-        else
-        {
-            heldItem.itemAmt++;
-        }
+        heldItem.itemAmt++;
 
         activeSlot.item.itemAmt--;
         activeSlot.itemCount.text = activeSlot.item.itemAmt.ToString();
 
         if(activeSlot.item.itemAmt <= 0)
         {
-            InventoryManager.instance.ClearItemSlot(activeSlot);
+            activeSlot.inventoryManager.ClearItemSlot(activeSlot);
         }
     }
 }

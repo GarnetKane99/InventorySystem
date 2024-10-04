@@ -10,6 +10,7 @@ public class UISlotHandler : MonoBehaviour, IPointerClickHandler
     public Item item;
     public Image slotImg;
     public TextMeshProUGUI itemCount;
+    public InventoryManager inventoryManager;
 
     void Awake()
     {
@@ -22,6 +23,7 @@ public class UISlotHandler : MonoBehaviour, IPointerClickHandler
         else
         {
             itemCount.text = string.Empty;
+            slotImg.gameObject.SetActive(false);
         }
     }
 
@@ -30,9 +32,6 @@ public class UISlotHandler : MonoBehaviour, IPointerClickHandler
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             if(item == null) { return; }
-
-            if(MouseManager.instance.GetHeldItem != null && MouseManager.instance.GetHeldItem.itemID != item.itemID)
-                return;
 
             MouseManager.instance.PickupFromStack(this);
             return;
